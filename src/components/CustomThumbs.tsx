@@ -1,0 +1,22 @@
+type CustomThumbsProps = {
+  firstThumbAction: () => void;
+  secondThumbAction: () => void;
+  thirdThumbAction: () => void;
+  fourthThumbAction: () => void;
+};
+
+export default function CustomThumbs({
+  firstThumbAction,
+  secondThumbAction,
+  thirdThumbAction,
+  fourthThumbAction,
+}: CustomThumbsProps) {
+  return (
+    <div className="customThumbs">
+      <img onClick={firstThumbAction} src="images/firstSlide.jpg" alt="" />
+      <img onClick={secondThumbAction} src="images/secondSlide.jpg" alt="" />
+      <img onClick={thirdThumbAction} src="images/thirdSlide.jpg" alt="" />
+      <img onClick={fourthThumbAction} src="images/fourthSlide.jpg" alt="" />
+    </div>
+  );
+}
