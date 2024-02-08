@@ -1,16 +1,16 @@
 type CustomButtonProps = {
-  lastSlide: boolean;
+  showButton: boolean;
   onClick: () => void;
 };
 
 export default function CustomButton({
-  lastSlide,
+  showButton,
   onClick,
 }: CustomButtonProps) {
   return (
     <div
       onClick={onClick}
-      style={lastSlide ? { visibility: "hidden" } : {}}
+      style={!showButton ? { visibility: "hidden" } : {}}
       className="customButton"
     >
       Присоединиться

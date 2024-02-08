@@ -1,29 +1,43 @@
+import { useState } from "react";
 import CustomButton from "./CustomButton";
 import CustomThumbs from "./CustomThumbs";
+import PrivacyCard from "./PrivacyCard";
+import AgreementCard from "./AgreementCard";
 
 type CustomSwiperItemProps = {
   backgroundImage: string;
   title: string;
   description: string;
-  lastSlide?: boolean;
+  showButton?: boolean;
+  showMarkets?: boolean;
+  showPolicyButtons?: boolean;
   onButtonClick: () => void;
   firstThumbAction: () => void;
   secondThumbAction: () => void;
   thirdThumbAction: () => void;
   fourthThumbAction: () => void;
+  fiveThumbAction: () => void;
+  setMouseWheel?: () => void;
 };
 
 export default function CustomSwiperItem({
   backgroundImage,
   title,
   description,
-  lastSlide,
+  showButton,
+  showMarkets,
+  showPolicyButtons,
   onButtonClick,
   firstThumbAction,
   secondThumbAction,
   thirdThumbAction,
   fourthThumbAction,
+  fiveThumbAction,
+  setMouseWheel,
 }: CustomSwiperItemProps) {
+  const [showPrivacy, setShowPrivacy] = useState(false);
+  const [showAgreement, setShowAgreement] = useState(false);
+
   return (
     <div
       style={{
@@ -40,10 +54,32 @@ export default function CustomSwiperItem({
       <div className="customSwiperItem__wrapper">
         <h1>{title}</h1>
         <p>{description}</p>
-        {lastSlide && (
+        {showMarkets && (
           <div className="customSwiperItem__store">
             <img src="images/appStore.png" alt="appStore" />
             <img src="images/googlePlay.png" alt="googlePlay" />
+          </div>
+        )}
+        {showPolicyButtons && (
+          <div className="customSwiperItem__policy">
+            <span
+              onClick={() => {
+                setShowPrivacy(true);
+                setMouseWheel && setMouseWheel();
+              }}
+              className="customSwiperItem__policy__item"
+            >
+              Политика конфиденциальности
+            </span>
+            <span
+              onClick={() => {
+                setShowAgreement(true);
+                setMouseWheel && setMouseWheel();
+              }}
+              className="customSwiperItem__policy__item"
+            >
+              Пользовательское соглашение
+            </span>
           </div>
         )}
         <CustomThumbs
@@ -51,9 +87,26 @@ export default function CustomSwiperItem({
           secondThumbAction={secondThumbAction}
           thirdThumbAction={thirdThumbAction}
           fourthThumbAction={fourthThumbAction}
+          fiveThumbAction={fiveThumbAction}
         />
       </div>
-      <CustomButton onClick={onButtonClick} lastSlide={lastSlide!} />
+      <CustomButton onClick={onButtonClick} showButton={showButton!} />
+      {showPrivacy && (
+        <PrivacyCard
+          closeCard={() => {
+            setShowPrivacy(false);
+            setMouseWheel && setMouseWheel();
+          }}
+        />
+      )}
+      {showAgreement && (
+        <AgreementCard
+          closeCard={() => {
+            setShowAgreement(false);
+            setMouseWheel && setMouseWheel();
+          }}
+        />
+      )}
     </div>
   );
 }
